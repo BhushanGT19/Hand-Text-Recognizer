@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+}
+
+.brand-name {
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  margin: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.upload-text {
+  margin-bottom: 30px;
+}
+
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+}
+
+.recognization {
+  display: flex;
+  flex-direction: row;
+  column-gap: 100px;
+}

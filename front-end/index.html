@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Written Text Recognization</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css"
+        rel="stylesheet" type="text/css" />
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+    <meta charset=utf-8 />
+
+</head>
+
+<body>
+
+    <div class="container-fluid text-center">
+        <h1 class=" text-center ">IMAGE TO TEXT RECOGNIZATION</h1>
+        <h4 class=" text-center ">Drag & Drop, or Upload Image</h4>
+        <br>
+        <input type='file' onchange="readURL(this);" />
+        <br>
+        <img id="mimg" src="img1.png" alt="your image" />
+        <br>
+        <a href="#" id="submit" class="btn btn-success" onclick="submitImage()">Submit</a>
+    </div>
+    
+    <h3 id="clg">SSBT COET Jalgaon</h3>
+    <script src="js.js"></script>
+
+    <div class="keyboard-container">
+        <span id="Butt" style="z-index:1;position:absolute; top:0px; left:0px; visibility:hidden"><img id="shade"
+                src="images/btn.gif" /></span>
+        <span id="Space" style="z-index:1;position:absolute; top:81px; left:82px; visibility:hidden"><img
+                src="images/space.gif" /></span>
+        <span id="bSpace" style="z-index:1;position:absolute; top:0px; left:280px; visibility:hidden"><img
+                src="images/bs.gif" /></span>
+        <span id="delete" style="z-index:1;position:absolute; top:20px; left:270px; visibility:hidden"><img
+                src="images/del.gif" /></span>
+        <span id="enter"
+            style="z-index:1; position:absolute; top:40px; left:256px; visibility:hidden; width: 40px;"><img
+                src="images/enter.gif" /></span>
+        <span id="tab" style="z-index:1;position:absolute; top:20px; left:0px; visibility:hidden"><img
+                src="images/tab.gif" /></span>
+        <span id="capsS" style="z-index:1; position:absolute; top:40px; left:0px; visibility:hidden; width: 40px;"><img
+                src="images/caps.gif" /></span>
+        <span id="ShiftL" style="z-index:1; position:absolute; top:60px; left:0px; visibility:hidden; width: 40px;"><img
+                src="images/lshift.gif" /></span>
+        <span id="ShiftR"
+            style="z-index:1; position:absolute; top:61px; left:247px; visibility:hidden; width: 40px;"><img
+                src="images/rshift.gif" /></span>
+
+        <div style="z-index:0;position:absolute; top:400px; left:300px;">
+            <img src="images/Base_kbd.gif" usemap="#Map" />
+            <map name="Map" id="Map">
+                <area shape="rect" coords="280,0,300,19" onclick="alert('Back Space - Not Implemented!');" />
+                <area shape="rect" coords="271,20,300,39" onclick="alert('Delete - Not Implemented!');" />
+                <area shape="rect" coords="257,40,300,59" onclick="alert('Enter - Not Implemented!');" />
+                <area shape="rect" coords="-6,61,46,80" onmousedown="IsShift=!IsShift;reset();" />
+                <area shape="rect" coords="247,61,300,79" onmousedown="IsShift=!IsShift;reset();" />
+                <area shape="rect" coords="81,82,196,99" onmousedown="InsertChar('m',32)" onmouseup="ButtonUp(32)" />
+            </map>
+        </div>
+        <div id="normal" style="z-index:1;  position:absolute; top:400px; left:300px; visibility:visible">
+            <img src="images/Hindi_normal.gif" usemap="#Map2" />
+            <map name="Map2" id="Map2">
+                <area shape="rect" coords="0,0,20,19" onmousedown="ButtonDown(96);" onmouseup="ButtonUp(96)" />
+                <area shape="rect" coords="20,0,40,19" onmousedown="ButtonDown(49);InsertChar('m',49)"
+                    onmouseup="ButtonUp(49)" />
+                <area shape="rect" coords="40,0,60,19" onmousedown="ButtonDown(50);InsertChar('m',50)"
+                    onmouseup="ButtonUp(50)" />
+                <area shape="rect" coords="60,0,80,19" onmousedown="ButtonDown(51);InsertChar('m',51)"
+                    onmouseup="ButtonUp(51)" />
+                <area shape="rect" coords="80,0,100,19" onmousedown="ButtonDown(52);InsertChar('m',52)"
+                    onmouseup="ButtonUp(52)" />
+                <area shape="rect" coords="100,0,120,19" onmousedown="ButtonDown(53);InsertChar('m',53)"
+                    onmouseup="ButtonUp(53)" />
+                <area shape="rect" coords="120,0,140,19" onmousedown="ButtonDown(54);InsertChar('m',54)"
+                    onmouseup="ButtonUp(54)" />
+                <area shape="rect" coords="140,0,160,19" onmousedown="ButtonDown(55);InsertChar('m',55)"
+                    onmouseup="ButtonUp(55)" />
+                <area shape="rect" coords="160,0,180,19" onmousedown="ButtonDown(56);InsertChar('m',56)"
+                    onmouseup="ButtonUp(56)" />
+                <area shape="rect" coords="180,0,200,19" onmousedown="ButtonDown(57);InsertChar('m',57)"
+                    onmouseup="ButtonUp(57)" />
+                <area shape="rect" coords="200,0,220,19" onmousedown="ButtonDown(48);InsertChar('m',48)"
+                    onmouseup="ButtonUp(48)" />
+                <area shape="rect" coords="220,0,240,19" onmousedown="ButtonDown(189);InsertChar('m',45)"
+                    onmouseup="ButtonUp(189)" />
+                <area shape="rect" coords="240,0,260,19" onmousedown="ButtonDown(187);InsertChar('m',61)"
+                    onmouseup="ButtonUp(187)" />
+                <area shape="rect" coords="260,0,280,19" onmousedown="ButtonDown(220);InsertChar('m',92)"
+                    onmouseup="ButtonUp(220)" />
+                <area shape="rect" coords="31,20,51,39" onmousedown="ButtonDown(81);InsertChar('m',113)"
+                    onmouseup="ButtonUp(81)" />
+                <area shape="rect" coords="51,20,71,39" onmousedown="ButtonDown(87);InsertChar('m',119)"
+                    onmouseup="ButtonUp(87)" />
+                <area shape="rect" coords="71,20,91,39" onmousedown="ButtonDown(69);InsertChar('m',101)"
+                    onmouseup="ButtonUp(69)" />
+                <area shape="rect" coords="91,20,111,39" onmousedown="ButtonDown(82);InsertChar('m',114)"
+                    onmouseup="ButtonUp(82)" />
+                <area shape="rect" coords="111,20,131,39" onmousedown="ButtonDown(84);InsertChar('m',116)"
+                    onmouseup="ButtonUp(84)" />
+                <area shape="rect" coords="131,20,151,39" onmousedown="ButtonDown(89);InsertChar('m',121)"
+                    onmouseup="ButtonUp(89)" />
+                <area shape="rect" coords="151,20,171,39" onmousedown="ButtonDown(85);InsertChar('m',117)"
+                    onmouseup="ButtonUp(85)" />
+                <area shape="rect" coords="171,20,191,39" onmousedown="ButtonDown(73);InsertChar('m',105)"
+                    onmouseup="ButtonUp(73)" />
+                <area shape="rect" coords="191,20,211,39" onmousedown="ButtonDown(79);InsertChar('m',111)"
+                    onmouseup="ButtonUp(79)" />
+                <area shape="rect" coords="211,20,231,39" onmousedown="ButtonDown(80);InsertChar('m',112)"
+                    onmouseup="ButtonUp(80)" />
+                <area shape="rect" coords="231,20,251,39" onmousedown="ButtonDown(219);InsertChar('m',91)"
+                    onmouseup="ButtonUp(219)" />
+                <area shape="rect" coords="251,20,271,39" onmousedown="ButtonDown(221);InsertChar('m',93)"
+                    onmouseup="ButtonUp(221)" />
+                <area shape="rect" coords="0,20,30,41" onclick="alert('Tab - Not Implemented!');" />
+                <area shape="rect" coords="271,20,281,39" onclick="alert('Delete - Not Implemented!');" />
+                <area shape="rect" coords="37,40,57,59" onmousedown="ButtonDown(65);InsertChar('m',97)"
+                    onmouseup="ButtonUp(65)" />
+                <area shape="rect" coords="57,40,77,59" onmousedown="ButtonDown(83);InsertChar('m',115)"
+                    onmouseup="ButtonUp(83)" />
+                <area shape="rect" coords="77,40,97,59" onmousedown="ButtonDown(68);InsertChar('m',100)"
+                    onmouseup="ButtonUp(68)" />
+                <area shape="rect" coords="97,40,117,59" onmousedown="ButtonDown(70);InsertChar('m',102)"
+                    onmouseup="ButtonUp(70)" />
+                <area shape="rect" coords="117,40,137,59" onmousedown="ButtonDown(71);InsertChar('m',103)"
+                    onmouseup="ButtonUp(71)" />
+                <area shape="rect" coords="137,40,157,59" onmousedown="ButtonDown(72);InsertChar('m',104)"
+                    onmouseup="ButtonUp(72)" />
+                <area shape="rect" coords="157,40,177,59" onmousedown="ButtonDown(74);InsertChar('m',106)"
+                    onmouseup="ButtonUp(74)" />
+                <area shape="rect" coords="177,40,197,59" onmousedown="ButtonDown(75);InsertChar('m',107)"
+                    onmouseup="ButtonUp(75)" />
+                <area shape="rect" coords="197,40,217,59" onmousedown="ButtonDown(76);InsertChar('m',108)"
+                    onmouseup="ButtonUp(76)" />
+                <area shape="rect" coords="217,40,237,59" onmousedown="ButtonDown(186);InsertChar('m',59)"
+                    onmouseup="ButtonUp(186)" />
+                <area shape="rect" coords="237,40,257,59" onmousedown="ButtonDown(222);InsertChar('m',39)"
+                    onmouseup="ButtonUp(222)" />
+                <area shape="rect" coords="0,40,38,61" onmousedown="IsCaps=!IsCaps;reset();" />
+                <area shape="rect" coords="257,40,285,59" onclick="alert('Enter - Not Implemented!');" />
+                <area shape="rect" coords="47,61,67,80" onmousedown="ButtonDown(90);" onmouseup="ButtonUp(90)" />
+                <area shape="rect" coords="67,61,87,80" onmousedown="ButtonDown(88);InsertChar('m',120)"
+                    onmouseup="ButtonUp(88)" />
+                <area shape="rect" coords="87,61,107,80" onmousedown="ButtonDown(67);InsertChar('m',99)"
+                    onmouseup="ButtonUp(67)" />
+                <area shape="rect" coords="107,61,127,80" onmousedown="ButtonDown(86);InsertChar('m',118)"
+                    onmouseup="ButtonUp(86)" />
+                <area shape="rect" coords="127,61,147,80" onmousedown="ButtonDown(66);InsertChar('m',98)"
+                    onmouseup="ButtonUp(66)" />
+                <area shape="rect" coords="147,61,167,80" onmousedown="ButtonDown(78);InsertChar('m',110)"
+                    onmouseup="ButtonUp(78)" />
+                <area shape="rect" coords="167,61,187,80" onmousedown="ButtonDown(77);InsertChar('m',109)"
+                    onmouseup="ButtonUp(77)" />
+                <area shape="rect" coords="187,61,207,80" onmousedown="ButtonDown(188);InsertChar('m',44)"
+                    onmouseup="ButtonUp(188)" />
+                <area shape="rect" coords="207,61,227,80" onmousedown="ButtonDown(190);InsertChar('m',46)"
+                    onmouseup="ButtonUp(190)" />
+                <area shape="rect" coords="227,61,247,80" onmousedown="ButtonDown(191);InsertChar('m',47)"
+                    onmouseup="ButtonUp(191)" />
+                <area shape="rect" coords="-6,61,46,80" onmousedown="IsShift=!IsShift;reset();" />
+                <area shape="rect" coords="247,59,281,83" onmousedown="IsShift=!IsShift;reset();" />
+            </map>
+        </div>
+        <div id="shift" style="z-index:1;position:absolute; top:400px; left:300px; visibility:hidden">
+            <img src="images/Hindi_shift.gif" usemap="#Map3" />
+            <map name="Map3" id="Map3">
+                <area shape="rect" coords="0,0,20,19" onmousedown="ButtonDown(126);" onmouseup="ButtonUp(126)" />
+                <area shape="rect" coords="20,0,40,19" onmousedown="ButtonDown(33);InsertChar('m',33)"
+                    onmouseup="ButtonUp(33)" />
+                <area shape="rect" coords="40,0,60,19" onmousedown="ButtonDown(64);InsertChar('m',64)"
+                    onmouseup="ButtonUp(64)" />
+                <area shape="rect" coords="60,0,80,19" onmousedown="ButtonDown(35);InsertChar('m',35)"
+                    onmouseup="ButtonUp(35)" />
+                <area shape="rect" coords="80,0,100,19" onmousedown="ButtonDown(36);InsertChar('m',36)"
+                    onmouseup="ButtonUp(36)" />
+                <area shape="rect" coords="100,0,120,19" onmousedown="ButtonDown(37);InsertChar('m',37)"
+                    onmouseup="ButtonUp(37)" />
+                <area shape="rect" coords="120,0,140,19" onmousedown="ButtonDown(94);InsertChar('m',94)"
+                    onmouseup="ButtonUp(94)" />
+                <area shape="rect" coords="140,0,160,19" onmousedown="ButtonDown(38);InsertChar('m',38)"
+                    onmouseup="ButtonUp(38)" />
+                <area shape="rect" coords="160,0,180,19" onmousedown="ButtonDown(42);InsertChar('m',42)"
+                    onmouseup="ButtonUp(42)" />
+                <area shape="rect" coords="180,0,200,19" onmousedown="ButtonDown(40);InsertChar('m',40)"
+                    onmouseup="ButtonUp(40)" />
+                <area shape="rect" coords="200,0,220,19" onmousedown="ButtonDown(41);InsertChar('m',41)"
+                    onmouseup="ButtonUp(41)" />
+                <area shape="rect" coords="220,0,240,19" onmousedown="ButtonDown(95);InsertChar('m',95)"
+                    onmouseup="ButtonUp(95)" />
+                <area shape="rect" coords="240,0,260,19" onmousedown="ButtonDown(43);InsertChar('m',43)"
+                    onmouseup="ButtonUp(43)" />
+                <area shape="rect" coords="260,0,280,19" onmousedown="ButtonDown(124);InsertChar('m',124)"
+                    onmouseup="ButtonUp(124)" />
+                <area shape="rect" coords="31,20,51,39" onmousedown="ButtonDown(81);InsertChar('m',81)"
+                    onmouseup="ButtonUp(81)" />
+                <area shape="rect" coords="51,20,71,39" onmousedown="ButtonDown(87);InsertChar('m',87)"
+                    onmouseup="ButtonUp(87)" />
+                <area shape="rect" coords="71,20,91,39" onmousedown="ButtonDown(69);InsertChar('m',69)"
+                    onmouseup="ButtonUp(69)" />
+                <area shape="rect" coords="91,20,111,39" onmousedown="ButtonDown(82);InsertChar('m',82)"
+                    onmouseup="ButtonUp(82)" />
+                <area shape="rect" coords="111,20,131,39" onmousedown="ButtonDown(84);InsertChar('m',84)"
+                    onmouseup="ButtonUp(84)" />
+                <area shape="rect" coords="131,20,151,39" onmousedown="ButtonDown(89);InsertChar('m',89)"
+                    onmouseup="ButtonUp(89)" />
+                <area shape="rect" coords="151,20,171,39" onmousedown="ButtonDown(85);InsertChar('m',85)"
+                    onmouseup="ButtonUp(85)" />
+                <area shape="rect" coords="171,20,191,39" onmousedown="ButtonDown(73);InsertChar('m',73)"
+                    onmouseup="ButtonUp(73)" />
+                <area shape="rect" coords="191,20,211,39" onmousedown="ButtonDown(79);InsertChar('m',79)"
+                    onmouseup="ButtonUp(79)" />
+                <area shape="rect" coords="211,20,231,39" onmousedown="ButtonDown(80);InsertChar('m',80)"
+                    onmouseup="ButtonUp(80)" />
+                <area shape="rect" coords="231,20,251,39" onmousedown="ButtonDown(219);InsertChar('m',123)"
+                    onmouseup="ButtonUp(219)" />
+                <area shape="rect" coords="251,20,271,39" onmousedown="ButtonDown(221);InsertChar('m',125)"
+                    onmouseup="ButtonUp(221)" />
+                <area shape="rect" coords="0,20,30,41" onclick="alert('Tab - Not Implemented!');" />
+                <area shape="rect" coords="271,20,281,39" onclick="alert('Delete - Not Implemented!');" />
+                <area shape="rect" coords="37,40,57,59" onmousedown="ButtonDown(65);InsertChar('m',65)"
+                    onmouseup="ButtonUp(65)" />
+                <area shape="rect" coords="57,40,77,59" onmousedown="ButtonDown(83);InsertChar('m',83)"
+                    onmouseup="ButtonUp(83)" />
+                <area shape="rect" coords="77,40,97,59" onmousedown="ButtonDown(68);InsertChar('m',68)"
+                    onmouseup="ButtonUp(68)" />
+                <area shape="rect" coords="97,40,117,59" onmousedown="ButtonDown(70);InsertChar('m',70)"
+                    onmouseup="ButtonUp(70)" />
+                <area shape="rect" coords="117,40,137,59" onmousedown="ButtonDown(71);InsertChar('m',71)"
+                    onmouseup="ButtonUp(71)" />
+                <area shape="rect" coords="137,40,157,59" onmousedown="ButtonDown(72);InsertChar('m',72)"
+                    onmouseup="ButtonUp(72)" />
+                <area shape="rect" coords="157,40,177,59" onmousedown="ButtonDown(74);InsertChar('m',74)"
+                    onmouseup="ButtonUp(74)" />
+                <area shape="rect" coords="177,40,197,59" onmousedown="ButtonDown(75);InsertChar('m',75)"
+                    onmouseup="ButtonUp(75)" />
+                <area shape="rect" coords="197,40,217,59" onmousedown="ButtonDown(76);InsertChar('m',76)"
+                    onmouseup="ButtonUp(76)" />
+                <area shape="rect" coords="217,40,237,59" onmousedown="ButtonDown(186);InsertChar('m',58)"
+                    onmouseup="ButtonUp(186)" />
+                <area shape="rect" coords="237,40,257,59" onmousedown="ButtonDown(222);InsertChar('m',34)"
+                    onmouseup="ButtonUp(222)" />
+                <area shape="rect" coords="0,40,38,61" onmousedown="IsCaps=!IsCaps;reset();" />
+                <area shape="rect" coords="257,40,285,59" onclick="alert('Enter - Not Implemented!');" />
+                <area shape="rect" coords="47,61,67,80" onmousedown="ButtonDown(90);" onmouseup="ButtonUp(90)" />
+                <area shape="rect" coords="67,61,87,80" onmousedown="ButtonDown(88);InsertChar('m',88)"
+                    onmouseup="ButtonUp(88)" />
+                <area shape="rect" coords="87,61,107,80" onmousedown="ButtonDown(67);InsertChar('m',67)"
+                    onmouseup="ButtonUp(67)" />
+                <area shape="rect" coords="107,61,127,80" onmousedown="ButtonDown(86);InsertChar('m',86)"
+                    onmouseup="ButtonUp(86)" />
+                <area shape="rect" coords="127,61,147,80" onmousedown="ButtonDown(66);InsertChar('m',66)"
+                    onmouseup="ButtonUp(66)" />
+                <area shape="rect" coords="147,61,167,80" onmousedown="ButtonDown(78);InsertChar('m',78)"
+                    onmouseup="ButtonUp(78)" />
+                <area shape="rect" coords="167,61,187,80" onmousedown="ButtonDown(77);InsertChar('m',77)"
+                    onmouseup="ButtonUp(77)" />
+                <area shape="rect" coords="187,61,207,80" onmousedown="ButtonDown(188);InsertChar('m',60)"
+                    onmouseup="ButtonUp(188)" />
+                <area shape="rect" coords="207,61,227,80" onmousedown="ButtonDown(190);InsertChar('m',62)"
+                    onmouseup="ButtonUp(190)" />
+                <area shape="rect" coords="227,61,247,80" onmousedown="ButtonDown(191);InsertChar('m',63)"
+                    onmouseup="ButtonUp(191)" />
+                <area shape="rect" coords="-6,61,46,80" onmousedown="IsShift=!IsShift;reset();" />
+                <area shape="rect" coords="247,59,281,83" onmousedown="IsShift=!IsShift;reset();" />
+            </map>
+        </div>
+        <div id="caps" style="z-index:1;position:absolute; top:400px; left:300px; visibility:hidden">
+            <img src="images/Hindi_shift.gif" usemap="#Map4" />
+            <map name="Map4" id="Map4">
+                <area shape="rect" coords="0,0,20,19" onmousedown="ButtonDown(96);" onmouseup="ButtonUp(96)" />
+                <area shape="rect" coords="20,0,40,19" onmousedown="ButtonDown(33);InsertChar('m',49)"
+                    onmouseup="ButtonUp(33)" />
+                <area shape="rect" coords="40,0,60,19" onmousedown="ButtonDown(64);InsertChar('m',50)"
+                    onmouseup="ButtonUp(64)" />
+                <area shape="rect" coords="60,0,80,19" onmousedown="ButtonDown(35);InsertChar('m',51)"
+                    onmouseup="ButtonUp(35)" />
+                <area shape="rect" coords="80,0,100,19" onmousedown="ButtonDown(36);InsertChar('m',52)"
+                    onmouseup="ButtonUp(36)" />
+                <area shape="rect" coords="100,0,120,19" onmousedown="ButtonDown(37);InsertChar('m',53)"
+                    onmouseup="ButtonUp(37)" />
+                <area shape="rect" coords="120,0,140,19" onmousedown="ButtonDown(94);InsertChar('m',54)"
+                    onmouseup="ButtonUp(94)" />
+                <area shape="rect" coords="140,0,160,19" onmousedown="ButtonDown(38);InsertChar('m',55)"
+                    onmouseup="ButtonUp(38)" />
+                <area shape="rect" coords="160,0,180,19" onmousedown="ButtonDown(42);InsertChar('m',56)"
+                    onmouseup="ButtonUp(42)" />
+                <area shape="rect" coords="180,0,200,19" onmousedown="ButtonDown(40);InsertChar('m',57)"
+                    onmouseup="ButtonUp(40)" />
+                <area shape="rect" coords="200,0,220,19" onmousedown="ButtonDown(41);InsertChar('m',48)"
+                    onmouseup="ButtonUp(41)" />
+                <area shape="rect" coords="220,0,240,19" onmousedown="ButtonDown(95);InsertChar('m',45)"
+                    onmouseup="ButtonUp(95)" />
+                <area shape="rect" coords="240,0,260,19" onmousedown="ButtonDown(43);InsertChar('m',61)"
+                    onmouseup="ButtonUp(43)" />
+                <area shape="rect" coords="260,0,280,19" onmousedown="ButtonDown(124);InsertChar('m',92)"
+                    onmouseup="ButtonUp(124)" />
+                <area shape="rect" coords="31,20,51,39" onmousedown="ButtonDown(81);InsertChar('m',81)"
+                    onmouseup="ButtonUp(81)" />
+                <area shape="rect" coords="51,20,71,39" onmousedown="ButtonDown(87);InsertChar('m',87)"
+                    onmouseup="ButtonUp(87)" />
+                <area shape="rect" coords="71,20,91,39" onmousedown="ButtonDown(69);InsertChar('m',69)"
+                    onmouseup="ButtonUp(69)" />
+                <area shape="rect" coords="91,20,111,39" onmousedown="ButtonDown(82);InsertChar('m',82)"
+                    onmouseup="ButtonUp(82)" />
+                <area shape="rect" coords="111,20,131,39" onmousedown="ButtonDown(84);InsertChar('m',84)"
+                    onmouseup="ButtonUp(84)" />
+                <area shape="rect" coords="131,20,151,39" onmousedown="ButtonDown(89);InsertChar('m',89)"
+                    onmouseup="ButtonUp(89)" />
+                <area shape="rect" coords="151,20,171,39" onmousedown="ButtonDown(85);InsertChar('m',85)"
+                    onmouseup="ButtonUp(85)" />
+                <area shape="rect" coords="171,20,191,39" onmousedown="ButtonDown(73);InsertChar('m',73)"
+                    onmouseup="ButtonUp(73)" />
+                <area shape="rect" coords="191,20,211,39" onmousedown="ButtonDown(79);InsertChar('m',79)"
+                    onmouseup="ButtonUp(79)" />
+                <area shape="rect" coords="211,20,231,39" onmousedown="ButtonDown(80);InsertChar('m',80)"
+                    onmouseup="ButtonUp(80)" />
+                <area shape="rect" coords="231,20,251,39" onmousedown="ButtonDown(219);InsertChar('m',91)"
+                    onmouseup="ButtonUp(219)" />
+                <area shape="rect" coords="251,20,271,39" onmousedown="ButtonDown(221);InsertChar('m',93)"
+                    onmouseup="ButtonUp(221)" />
+                <area shape="rect" coords="0,20,30,41" onclick="alert('Tab - Not Implemented!');" />
+                <area shape="rect" coords="271,20,281,39" onclick="alert('Delete - Not Implemented!');" />
+                <area shape="rect" coords="37,40,57,59" onmousedown="ButtonDown(65);InsertChar('m',65)"
+                    onmouseup="ButtonUp(65)" />
+                <area shape="rect" coords="57,40,77,59" onmousedown="ButtonDown(83);InsertChar('m',83)"
+                    onmouseup="ButtonUp(83)" />
+                <area shape="rect" coords="77,40,97,59" onmousedown="ButtonDown(68);InsertChar('m',68)"
+                    onmouseup="ButtonUp(68)" />
+                <area shape="rect" coords="97,40,117,59" onmousedown="ButtonDown(70);InsertChar('m',70)"
+                    onmouseup="ButtonUp(70)" />
+                <area shape="rect" coords="117,40,137,59" onmousedown="ButtonDown(71);InsertChar('m',71)"
+                    onmouseup="ButtonUp(71)" />
+                <area shape="rect" coords="137,40,157,59" onmousedown="ButtonDown(72);InsertChar('m',72)"
+                    onmouseup="ButtonUp(72)" />
+                <area shape="rect" coords="157,40,177,59" onmousedown="ButtonDown(74);InsertChar('m',74)"
+                    onmouseup="ButtonUp(74)" />
+                <area shape="rect" coords="177,40,197,59" onmousedown="ButtonDown(75);InsertChar('m',75)"
+                    onmouseup="ButtonUp(75)" />
+                <area shape="rect" coords="197,40,217,59" onmousedown="ButtonDown(76);InsertChar('m',76)"
+                    onmouseup="ButtonUp(76)" />
+                <area shape="rect" coords="217,40,237,59" onmousedown="ButtonDown(186);InsertChar('m',59)"
+                    onmouseup="ButtonUp(186)" />
+                <area shape="rect" coords="237,40,257,59" onmousedown="ButtonDown(222);InsertChar('m',39)"
+                    onmouseup="ButtonUp(222)" />
+                <area shape="rect" coords="0,40,38,61" onmousedown="IsCaps=!IsCaps;reset();" />
+                <area shape="rect" coords="257,40,285,59" onclick="alert('Enter - Not Implemented!');" />
+                <area shape="rect" coords="47,61,67,80" onmousedown="ButtonDown(90);" onmouseup="ButtonUp(90)" />
+                <area shape="rect" coords="67,61,87,80" onmousedown="ButtonDown(88);InsertChar('m',88)"
+                    onmouseup="ButtonUp(88)" />
+                <area shape="rect" coords="87,61,107,80" onmousedown="ButtonDown(67);InsertChar('m',67)"
+                    onmouseup="ButtonUp(67)" />
+                <area shape="rect" coords="107,61,127,80" onmousedown="ButtonDown(86);InsertChar('m',86)"
+                    onmouseup="ButtonUp(86)" />
+                <area shape="rect" coords="127,61,147,80" onmousedown="ButtonDown(66);InsertChar('m',66)"
+                    onmouseup="ButtonUp(66)" />
+                <area shape="rect" coords="147,61,167,80" onmousedown="ButtonDown(78);InsertChar('m',78)"
+                    onmouseup="ButtonUp(78)" />
+                <area shape="rect" coords="167,61,187,80" onmousedown="ButtonDown(77);InsertChar('m',77)"
+                    onmouseup="ButtonUp(77)" />
+                <area shape="rect" coords="187,61,207,80" onmousedown="ButtonDown(188);InsertChar('m',44)"
+                    onmouseup="ButtonUp(188)" />
+                <area shape="rect" coords="207,61,227,80" onmousedown="ButtonDown(190);InsertChar('m',46)"
+                    onmouseup="ButtonUp(190)" />
+                <area shape="rect" coords="227,61,247,80" onmousedown="ButtonDown(191);InsertChar('m',47)"
+                    onmouseup="ButtonUp(191)" />
+                <area shape="rect" coords="-6,61,46,80" onmousedown="IsShift=!IsShift;reset();" />
+                <area shape="rect" coords="247,59,281,83" onmousedown="IsShift=!IsShift;reset();" />
+            </map>
+        </div>
+        <div style="z-index:1;position:absolute; top:200px; left:300px;">
+            <textarea class="use-keyboard-input" id="txtHindi" name="txtHindi"></textarea>
+        </div>
+    </div>
+
+    <script>
+        if (navigator.appName != "Mozilla") {
+            document.getElementById('txtHindi').onkeydown = checkCode;
+            document.getElementById('txtHindi').onkeypress = writeKeyPressed;
+            document.getElementById('txtHindi').onkeyup = restoreCode;
+        }
+        else {
+            document.addEventListener("onkeydown", checkCode, true);
+            document.addEventListener("onkeypress", writeKeyPressed, false);
+            document.addEventListener("onkeyup", restoreCode, true);
+        }
+    </script>
+
+</body>
+</html>
